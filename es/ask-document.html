@@ -23,7 +23,7 @@ a{color:inherit}.shell{max-width:1180px;margin:auto;padding:0 28px}.top{display:
 <section class="hero">
 <div class="eyebrow">Laboratorio de Ingeniería · 02</div>
 <h1>Pregúntale a un <em>documento.</em></h1>
-<p>Una pequeña demo de retrieval: haz una pregunta, recupera los fragmentos relevantes y recibe una respuesta con fuentes trazables. El punto no es el chatbot, sino el sistema que lo rodea.</p>
+<p>Una pequeña demo de recuperación de información: haz una pregunta, recupera los fragmentos relevantes y recibe una respuesta con fuentes trazables. El punto no es el chatbot, sino el sistema que lo rodea.</p>
 </section>
 <section class="app">
 <aside class="panel side">
@@ -58,7 +58,7 @@ const chunks=[
 {title:"Retrieval con IA",page:7,text:"Las preguntas sobre documentos siguen un patrón de retrieval aumentado: los documentos se dividen en fragmentos útiles, se indexan, se recuperan para cada pregunta y se suministran como contexto antes de generar una respuesta. Las respuestas deben citar los fragmentos utilizados."},
 {title:"Observabilidad",page:8,text:"Los flujos importantes emiten logs y métricas estructurados. Las interacciones con IA deben registrar latencia de retrieval, fuentes seleccionadas y estado de respuesta sin almacenar contenido sensible innecesario."}
 ];
-const q=document.getElementById("q"), ask=documento.getElementById("ask"), answer=documento.getElementById("answer");
+const q=document.getElementById("q"), ask=document.getElementById("ask"), answer=document.getElementById("answer");
 function normalize(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g," ").split(/\s+/).filter(Boolean)}
 function retrieve(question){const terms=normalize(question);return chunks.map(c=>{const text=normalize(c.title+" "+c.text);let score=terms.reduce((n,t)=>n+(text.includes(t)?1:0),0);return {...c,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,2)}
 function answerQuestion(question){const hits=retrieve(question);if(!question.trim()){return}

@@ -50,11 +50,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: |
-            poi-editor/package-lock.json
-            ask-a-document/package-lock.json
-            multi-business-workspace/package-lock.json
 
       - name: Build POI editor
         working-directory: poi-editor

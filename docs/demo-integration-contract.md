@@ -34,3 +34,8 @@ The shell owns browser navigation. A demo requests exit with `demo.exit`; the sh
 No Angular, RxJS, React, Vite or other framework dependency is shared across demos.
 
 Each project owns its runtime and version. Only the small integration protocol is shared conceptually.
+
+
+## Validation
+
+The portfolio build pipeline compiles every independent demo before replacing the published build. A failed remote build must leave the previously published demos untouched.

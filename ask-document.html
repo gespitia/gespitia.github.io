@@ -16,3 +16,66 @@ a{color:inherit}.shell{max-width:1180px;margin:auto;padding:0 28px}.top{display:
 .note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:22px}.footer{padding:0 0 40px;color:var(--muted);font-size:12px}
 @media(max-width:760px){.app{grid-template-columns:1fr}.hero{padding-top:48px}.question{flex-direction:column}.question button{height:44px}.main{padding:18px}.shell{padding:0 18px}}
 .language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-left:16px}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}@media(max-width:700px){.language-switch{margin-left:8px}}.header-actions{display:flex;align-items:center;gap:18px}.language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}@media(max-width:700px){.header-actions{gap:8px}.back{font-size:11px}.language-switch{font-size:.56rem}}.header-actions{display:flex;align-items:center;gap:18px}.language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}@media(max-width:700px){.header-actions{gap:8px}.language-switch{font-size:.56rem}}</style>
+</head>
+<body>
+<div class="shell">
+<header class="top"><a class="brand" href="./">GE<span>·</span> Ask a Document</a><div class="header-actions"><a class="back" href="./">← Back to portfolio</a><div class="language-switch" aria-label="Language"><a data-lang="en" href="ask-document.html">EN</a><span>/</span><a data-lang="es" href="es/ask-document.html">ES</a></div></div></header>
+<section class="hero">
+<div class="eyebrow">Engineering Lab · 02</div>
+<h1>Ask a <em>document.</em></h1>
+<p>A small retrieval demo: ask a question, retrieve the relevant passages, and return an answer with traceable sources. The point is not the chatbot — it is the system around it.</p>
+</section>
+<section class="app">
+<aside class="panel side">
+<h2>Document</h2>
+<div class="doc"><strong>Product Architecture Brief</strong><small>8 sections · demo knowledge base</small></div>
+<div class="status"><span class="dot"></span>Demo ready</div>
+<div class="arch">
+<div><b>01</b> Document</div><div><b>02</b> Chunk & index</div><div><b>03</b> Retrieve context</div><div><b>04</b> Generate answer</div><div><b>05</b> Cite sources</div>
+</div>
+<p class="note">This portfolio demo runs entirely in the browser. It uses deterministic local retrieval so the experience remains public, fast and reproducible.</p>
+</aside>
+<main class="panel main">
+<div class="question"><input id="q" placeholder="Ask about the document…" autocomplete="off"><button id="ask">Ask</button></div>
+<div class="suggestions">
+<button data-q="What is the frontend architecture approach?">Frontend architecture</button>
+<button data-q="How should permissions work?">Permissions</button>
+<button data-q="What is the data isolation strategy?">Data isolation</button>
+</div>
+<div class="answer" id="answer"><h2>ANSWER</h2><div class="empty">Choose a question or write your own.</div></div>
+<details class="trace"><summary>Show retrieval trace</summary><div class="steps"><span class="step">query normalization</span><span class="step">keyword scoring</span><span class="step">top-k retrieval</span><span class="step">grounded response</span><span class="step">source mapping</span></div></details>
+</main>
+</section>
+<footer class="footer">Built by Gustavo Espitia · Angular / Architecture / AI exploration</footer>
+</div>
+<script>
+const chunks=[
+{title:"Architecture principles",page:2,text:"The platform uses an application shell to coordinate independently deployable microfrontends. Shared contracts are kept small and explicit so teams can evolve features without coupling the entire application."},
+{title:"Frontend architecture",page:3,text:"Frontend applications are organized around domain microfrontends. Angular is used for application development, while shared UI primitives are exposed through Web Components and a central design system."},
+{title:"Permissions",page:4,text:"Authorization is enforced by the backend. The interface should hide unavailable actions rather than presenting controls that the current user cannot execute. Every protected operation is checked again at the API boundary."},
+{title:"Tenant isolation",page:5,text:"All business data carries a tenant identifier. PostgreSQL row-level security is used as a second isolation boundary so application mistakes cannot accidentally expose records belonging to another tenant."},
+{title:"Backend services",page:6,text:"The backend exposes stable APIs for identity, permissions and business operations. Services should remain stateless where possible and persist durable state in PostgreSQL."},
+{title:"AI retrieval",page:7,text:"Document question answering follows a retrieval-augmented pattern: documents are split into useful passages, indexed, retrieved for each question and supplied as context before an answer is generated. Answers should cite the passages used."},
+{title:"Observability",page:8,text:"Important flows emit structured logs and metrics. AI interactions should record retrieval latency, selected sources and response status without storing unnecessary sensitive document content."}
+];
+const q=document.getElementById("q"), ask=document.getElementById("ask"), answer=document.getElementById("answer");
+function normalize(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g," ").split(/\s+/).filter(Boolean)}
+function retrieve(question){const terms=normalize(question);return chunks.map(c=>{const text=normalize(c.title+" "+c.text);let score=terms.reduce((n,t)=>n+(text.includes(t)?1:0),0);return {...c,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,2)}
+function answerQuestion(question){const hits=retrieve(question);if(!question.trim()){return}
+if(!hits.length){answer.innerHTML='<h2>ANSWER</h2><div class="answer-text">I could not find enough evidence in this document to answer that question. A grounded system should say that instead of inventing an answer.</div>';return}
+const lead=hits[0].text;
+answer.innerHTML='<h2>ANSWER</h2><div class="answer-text">'+lead.replace(/(microfrontends|Web Components|PostgreSQL row-level security|retrieval-augmented pattern|backend)/gi,"<strong>$1</strong>")+'</div><div class="sources">'+hits.map(h=>'<div class="source"><b>Page '+h.page+' · '+h.title+'</b><span>Retrieved passage</span></div>').join("")+'</div>'}
+ask.onclick=()=>answerQuestion(q.value);q.addEventListener("keydown",e=>{if(e.key==="Enter")answerQuestion(q.value)});document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{q.value=b.dataset.q;answerQuestion(q.value)});
+</script>
+<script>
+(function(){
+ const key="gespitia-language", current=localStorage.getItem(key)||"en";
+ document.documentElement.lang=current;
+ document.querySelectorAll("[data-lang]").forEach(a=>{
+  a.classList.toggle("active",a.dataset.lang===current);
+  a.setAttribute("aria-current",a.dataset.lang===current?"true":"false");
+  a.addEventListener("click",()=>localStorage.setItem(key,a.dataset.lang));
+ });
+})();
+</script></body>
+</html>

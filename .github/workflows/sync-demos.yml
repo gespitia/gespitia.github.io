@@ -1,4 +1,5 @@
 name: Build and sync live demos
+# Live demo builds are committed so GitHub Pages can serve them from main.
 
 on:
   push:

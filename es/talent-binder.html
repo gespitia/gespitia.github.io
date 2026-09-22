@@ -20,7 +20,7 @@ dialog{border:0;border-radius:14px;width:min(560px,calc(100% - 30px));padding:0;
 .language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-left:16px}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}@media(max-width:700px){.language-switch{margin-left:8px}}.header-actions{display:flex;align-items:center;gap:18px}.language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}@media(max-width:700px){.header-actions{gap:8px}.back{font-size:11px}.language-switch{font-size:.56rem}}</style>
 </head>
 <body>
-<header><a class="brand" href="../talent-binder.html">GE<span style="color:var(--accent)">·</span> TalentBinder</a><div class="header-actions"><a class="back" href="../talent-binder.html">← Volver al portafolio</a><div class="language-switch" aria-label="Language"><a data-lang="es" href="../talent-binder.html">EN</a><span>/</span><a data-lang="es" href="../talent-binder.html">ES</a></div></div></header>
+<header><a class="brand" href="../">GE<span style="color:var(--accent)">·</span> TalentBinder</a><div class="header-actions"><a class="back" href="../">← Volver al portafolio</a><div class="language-switch" aria-label="Idioma"><a data-lang="en" href="../talent-binder.html">EN</a><span>/</span><a data-lang="es" href="./talent-binder.html">ES</a></div></div></header>
 <main>
 <div class="eyebrow">Laboratorio de Ingeniería · 03</div><h1>Gestión de empleados</h1>
 <p class="intro">Una adaptación pública que funciona en el navegador de mi proyecto TalentBinder con Angular 18. Explora búsqueda, creación, edición y eliminación de empleados sin depender de un backend.</p>
@@ -47,19 +47,19 @@ const seed=[
 ["Jorge","Vargas","help desk","Soporte","jorge.vargas@empresa.com","3005550110"]
 ].map((x,i)=>({id:i+1,firstName:x[0],lastName:x[1],position:x[2],department:x[3],email:x[4],phoneNumber:x[5]}));
 let empleados=[...seed],editing=null;
-const rows=documento.querySelector("#rows"),count=documento.querySelector("#count"),search=documento.querySelector("#search"),dlg=documento.querySelector("#dlg"),form=documento.querySelector("#form"),title=documento.querySelector("#title");
+const rows=document.querySelector("#rows"),count=document.querySelector("#count"),search=document.querySelector("#search"),dlg=document.querySelector("#dlg"),form=document.querySelector("#form"),title=document.querySelector("#title");
 function render(){const q=search.value.toLowerCase().trim();const list=empleados.filter(e=>[e.firstName,e.lastName,e.position,e.department,e.email].join(" ").toLowerCase().includes(q));count.textContent=list.length+" empleados";rows.innerHTML=list.length?list.map(e=>`<tr><td class="name">${e.firstName} ${e.lastName}</td><td><span class="pill">${e.position}</span></td><td>${e.department}</td><td>${e.email}</td><td class="actions"><button class="secondary" onclick="editEmpleado(${e.id})">Editar</button> <button class="secondary" onclick="removeEmpleado(${e.id})">Eliminar</button></td></tr>`).join(""):'<tr><td colspan="5" class="empty">No empleados match your search.</td></tr>'}
 window.editEmpleado=id=>{editing=empleados.find(e=>e.id===id);openForm()};
 window.removeEmpleado=id=>{if(confirm("Eliminar this employee from the demo?")){empleados=empleados.filter(e=>e.id!==id);render()}};
 function openForm(){title.textContent=editing?"Editarar empleado":"Add employee";form.reset();if(editing)Object.keys(editing).forEach(k=>{if(form.elements[k])form.elements[k].value=editing[k]});dlg.showModal()}
-documento.querySelector("#add").onclick=()=>{editing=null;openForm()};documento.querySelector("#cancel").onclick=()=>dlg.close();search.oninput=render;
+document.querySelector("#add").onclick=()=>{editing=null;openForm()};document.querySelector("#cancel").onclick=()=>dlg.close();search.oninput=render;
 form.onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(form));if(editing)Object.assign(editing,d);else empleados.unshift({id:Date.now(),...d});dlg.close();render()};render();
 </script><script>
 (function(){
  const key="gespitia-language";
  const current=localStorage.getItem(key)||"en";
- documento.documentElement.lang=current;
- documento.querySelectorAll("[data-lang]").forEach(a=>{
+ document.documentElement.lang=current;
+ document.querySelectorAll("[data-lang]").forEach(a=>{
   a.classList.toggle("active",a.dataset.lang===current);
   a.setAttribute("aria-current",a.dataset.lang===current?"true":"false");
   a.addEventListener("click",()=>localStorage.setItem(key,a.dataset.lang));

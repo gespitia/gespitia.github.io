@@ -29,22 +29,22 @@ dialog{border:0;border-radius:14px;width:min(560px,calc(100% - 30px));padding:0;
 </main>
 <dialog id="dlg"><form method="dialog" class="modal" id="form"><h2 id="title">Agregar empleado</h2><div class="grid">
 <div class="field"><label>Nombre</label><input name="firstName" required></div><div class="field"><label>Apellido</label><input name="lastName" required></div>
-<div class="field"><label>Cargo</label><select name="position"><option>front-end developer</option><option>full-stack developer</option><option>product manager</option><option>scrum master</option><option>help desk</option></select></div>
+<div class="field"><label>Cargo</label><select name="position"><option>desarrollador front-end</option><option>desarrollador full-stack</option><option>gerente de producto</option><option>scrum master</option><option>mesa de ayuda</option></select></div>
 <div class="field"><label>Departamento</label><select name="department"><option>Desarrollo</option><option>IT</option><option>Soporte</option><option>Administración</option></select></div>
 <div class="field"><label>Email</label><input name="email" type="email" required></div><div class="field"><label>Teléfono</label><input name="phoneNumber"></div>
 </div><div class="modal-actions"><button type="button" class="secondary" id="cancel">Cancelar</button><button type="submit">Guardar empleado</button></div></form></dialog>
 <script>
 const seed=[
-["Ana","Martínez","front-end developer","Desarrollo","ana.martinez@empresa.com","3005550101"],
-["Carlos","Gómez","full-stack developer","IT","carlos.gomez@empresa.com","3005550102"],
-["Laura","Rodríguez","product manager","Administración","laura.rodriguez@empresa.com","3005550103"],
+["Ana","Martínez","desarrollador front-end","Desarrollo","ana.martinez@empresa.com","3005550101"],
+["Carlos","Gómez","desarrollador full-stack","IT","carlos.gomez@empresa.com","3005550102"],
+["Laura","Rodríguez","gerente de producto","Administración","laura.rodriguez@empresa.com","3005550103"],
 ["Miguel","Torres","scrum master","Desarrollo","miguel.torres@empresa.com","3005550104"],
-["Sofía","Herrera","front-end developer","Desarrollo","sofia.herrera@empresa.com","3005550105"],
-["Daniel","Castro","help desk","Soporte","daniel.castro@empresa.com","3005550106"],
-["Valentina","Rojas","full-stack developer","IT","valentina.rojas@empresa.com","3005550107"],
-["Andrés","Mendoza","front-end developer","Desarrollo","andres.mendoza@empresa.com","3005550108"],
-["Camila","Pérez","product manager","Administración","camila.perez@empresa.com","3005550109"],
-["Jorge","Vargas","help desk","Soporte","jorge.vargas@empresa.com","3005550110"]
+["Sofía","Herrera","desarrollador front-end","Desarrollo","sofia.herrera@empresa.com","3005550105"],
+["Daniel","Castro","mesa de ayuda","Soporte","daniel.castro@empresa.com","3005550106"],
+["Valentina","Rojas","desarrollador full-stack","IT","valentina.rojas@empresa.com","3005550107"],
+["Andrés","Mendoza","desarrollador front-end","Desarrollo","andres.mendoza@empresa.com","3005550108"],
+["Camila","Pérez","gerente de producto","Administración","camila.perez@empresa.com","3005550109"],
+["Jorge","Vargas","mesa de ayuda","Soporte","jorge.vargas@empresa.com","3005550110"]
 ].map((x,i)=>({id:i+1,firstName:x[0],lastName:x[1],position:x[2],department:x[3],email:x[4],phoneNumber:x[5]}));
 let empleados=[...seed],editing=null;
 const rows=document.querySelector("#rows"),count=document.querySelector("#count"),search=document.querySelector("#search"),dlg=document.querySelector("#dlg"),form=document.querySelector("#form"),title=document.querySelector("#title");

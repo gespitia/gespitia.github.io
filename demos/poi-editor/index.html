@@ -1,13 +1,28 @@
 <!doctype html>
-<html lang="en" data-beasties-container>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>AngularMaplibrePoiEditor</title>
-  <base href="/demos/poi-editor/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="stylesheet" href="styles-5INURTSO.css"></head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gustavo Espitia · Live Demo</title>
+<style>
+:root{--bg:#e7e9e5;--ink:#27302d;--muted:#68726d;--line:#d5dad5;--accent:#766f9f}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+header{height:58px;display:flex;align-items:center;padding:0 max(14px,calc((100vw - 1240px)/2));gap:20px;border-bottom:1px solid var(--line);background:rgba(231,233,229,.96);position:relative;z-index:2}
+.brand{font-weight:700;text-decoration:none;color:var(--ink);white-space:nowrap}.brand span{color:var(--accent)}
+.back{margin-left:auto;color:var(--muted);text-decoration:none;font-size:11px;letter-spacing:.06em}
+.lang{display:flex;gap:7px;font-size:10px;letter-spacing:.1em}.lang a{color:var(--muted);text-decoration:none}.lang a.active{color:var(--ink);font-weight:700}
+iframe{display:block;width:100%;height:calc(100vh - 58px);border:0;background:#fff}
+@media(max-width:650px){header{gap:10px}.brand{font-size:12px}.back{font-size:9px}}
+</style>
+</head>
 <body>
-  <app-root></app-root>
-<script src="main-A7JTTDGH.js" type="module"></script></body>
+<header>
+<a class="brand" href="../../">GE<span>·</span> Gustavo Espitia</a>
+<a class="back" href="../../">← Back to portfolio</a>
+<div class="lang"><a class="en" href="../../poi-editor.html">EN</a><a class="es" href="../../es/poi-editor.html">ES</a></div>
+</header>
+<iframe src="app.html" title="Live demo"></iframe>
+<script>
+(function(){const k='gespitia-language',v=localStorage.getItem(k)||'en';document.querySelector('.'+v)?.classList.add('active');document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',()=>localStorage.setItem(k,a.classList.contains('es')?'es':'en')));})();
+</script>
+</body>
 </html>

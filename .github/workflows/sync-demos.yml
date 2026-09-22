@@ -90,7 +90,15 @@ jobs:
           cp -R talent-binder/dist/talent-binder/browser/. demos/talent-binder/
           cp -R multi-business-workspace/dist/. demos/multi-business-workspace/
           for demo in poi-editor ask-a-document talent-binder multi-business-workspace; do
-            mv "demos/$demo/index.html" "demos/$demo/app.html"
+            if [ -f "demos/$demo/index.html" ]; then
+              mv "demos/$demo/index.html" "demos/$demo/app.html"
+            elif [ -f "demos/$demo/index.csr.html" ]; then
+              mv "demos/$demo/index.csr.html" "demos/$demo/app.html"
+            else
+              echo "Missing browser entrypoint for $demo"
+              find "demos/$demo" -maxdepth 2 -type f | sort
+              exit 1
+            fi
             cat > "demos/$demo/index.html" <<EOF
           <!doctype html>
           <html lang="en">

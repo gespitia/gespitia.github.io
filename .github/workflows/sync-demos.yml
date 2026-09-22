@@ -1,5 +1,6 @@
 name: Build and sync live demos
 # Live demo builds are committed so GitHub Pages can serve them from main.
+# Build gate: every demo must compile before any published demo is replaced.
 
 on:
   push:

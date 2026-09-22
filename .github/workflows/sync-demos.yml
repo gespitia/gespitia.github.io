@@ -1,0 +1,73 @@
+name: Build and sync live demos
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "sync-demos"
+  cancel-in-progress: true
+
+jobs:
+  build-demos:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout portfolio
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout Ask a Document
+        uses: actions/checkout@v4
+        with:
+          repository: gespitia/ask-a-document
+          ref: main
+          path: ask-a-document
+
+      - name: Checkout Multi-Business Workspace
+        uses: actions/checkout@v4
+        with:
+          repository: gespitia/multi-business-workspace
+          ref: main
+          path: multi-business-workspace
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build Ask a Document
+        working-directory: ask-a-document
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: Build Multi-Business Workspace
+        working-directory: multi-business-workspace
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: Sync built demos
+        run: |
+          rm -rf demos/ask-a-document demos/multi-business-workspace
+          mkdir -p demos/ask-a-document demos/multi-business-workspace
+          cp -R ask-a-document/dist/. demos/ask-a-document/
+          cp -R multi-business-workspace/dist/. demos/multi-business-workspace/
+
+      - name: Commit demo builds
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add demos/ask-a-document demos/multi-business-workspace
+          if git diff --cached --quiet; then
+            echo "No demo changes to commit."
+          else
+            git commit -m "Build live demos [skip ci]"
+            git push
+          fi

@@ -36,7 +36,7 @@ footer{padding:0 0 50px;color:var(--muted);font-size:.7rem}
 <div class="side-note"><b>Propietario</b><br>Una identidad · tres negocios<br><br>El contexto cambia. La identidad no.</div>
 </aside>
 <section class="main">
-<div class="topline"><div class="title"><div class="mono muted">CONTEXTO DEL NEGOCIO</div><h2 id="businessName">Blue Table</h2><p id="businessMeta">Restaurant · Cartagena · Tenant aislado</p></div><div class="role">ROL · PROPIETARIO</div></div>
+<div class="topline"><div class="title"><div class="mono muted">CONTEXTO DEL NEGOCIO</div><h2 id="businessName">Blue Table</h2><p id="businessMeta">Restaurante · Cartagena · Tenant aislado</p></div><div class="role">ROL · PROPIETARIO</div></div>
 <div class="content">
 
 <div id="dashboard" class="view active">
@@ -62,7 +62,7 @@ footer{padding:0 0 50px;color:var(--muted);font-size:.7rem}
 </main>
 <footer class="wrap">Gustavo Espitia · Demo de arquitectura de producto en vivo · Simulación en navegador, no un SaaS de producción.</footer>
 <script>
-const data={restaurant:{name:"Blue Table",meta:"Restaurant · Cartagena · Tenant aislado",revenue:"$48.2k",orders:"1,284",customers:"842",alerts:"3"},hardware:{name:"Northline",meta:"Hardware · Cartagena · Tenant aislado",revenue:"$91.7k",orders:"624",customers:"391",alerts:"5"},services:{name:"CoralWorks",meta:"Services · Cartagena · Tenant aislado",revenue:"$36.4k",orders:"218",customers:"126",alerts:"1"}};
+const data={restaurant:{name:"Blue Table",meta:"Restaurante · Cartagena · Tenant aislado",revenue:"$48.2k",orders:"1,284",customers:"842",alerts:"3"},hardware:{name:"Northline",meta:"Ferretería · Cartagena · Tenant aislado",revenue:"$91.7k",orders:"624",customers:"391",alerts:"5"},services:{name:"CoralWorks",meta:"Servicios · Cartagena · Tenant aislado",revenue:"$36.4k",orders:"218",customers:"126",alerts:"1"}};
 document.querySelectorAll(".navitem").forEach(b=>b.onclick=()=>{document.querySelectorAll(".navitem").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.view).classList.add("active")});
 function switchTenant(){const d=data[document.getElementById("tenant").value];businessName.textContent=d.name;businessMeta.textContent=d.meta;activityLabel.textContent=d.name;revenue.textContent=d.revenue;orders.textContent=d.orders;customers.textContent=d.customers;alerts.textContent=d.alerts;aiTenant.textContent=d.name;aiAnswer.innerHTML='<div class="label">CONTEXTO ACTUALIZADO</div><h3>El contexto de IA cambió a '+d.name+'.</h3><p class="muted" style="font-size:.76rem">El asistente ahora opera dentro del contexto de este negocio.</p>'}
 function filterRows(q,id){document.querySelectorAll("#"+id+" tr").forEach(r=>r.style.display=r.innerText.toLowerCase().includes(q.toLowerCase())?"":"none")}

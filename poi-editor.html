@@ -5,6 +5,7 @@
 <title>Angular MapLibre POI Editor · Gustavo Espitia</title>
 <meta name="description" content="Live Angular MapLibre POI Editor demo by Gustavo Espitia.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23202824'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial' font-size='24' font-weight='700' fill='white'%3EGE%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#eef0ec;--paper:#fff;--ink:#202824;--muted:#68716c;--line:#d9ded9;--accent:#7169a0}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif}
@@ -13,6 +14,35 @@ header{height:64px;border-bottom:1px solid var(--line);background:rgba(238,240,2
 .language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}
 iframe{display:block;width:100%;height:calc(100vh - 64px);border:0;background:#fff}
 @media(max-width:700px){header{padding:0 14px}.brand{font-size:13px}.back{margin-right:8px}.back{font-size:.55rem}}
+
+/* GE portfolio visual language */
+:root{
+  --bg:#e7e9e5;
+  --paper:#f0f1ee;
+  --ink:#27302d;
+  --muted:#68726d;
+  --line:#d5dad5;
+  --accent:#766f9f;
+  --accent-soft:#918ab5;
+}
+body{background:var(--bg);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+header,.top{background:rgba(231,233,229,.94)!important;border-bottom:1px solid rgba(213,218,213,.8)!important}
+.brand{color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;letter-spacing:-.04em}
+.brand span{color:var(--accent)!important}
+.back{color:var(--muted)!important}
+.language-switch a.active{color:var(--ink)!important}
+.language-switch span{color:var(--line)!important}
+button{background:var(--ink)!important;border-color:var(--ink)!important}
+button.secondary,.suggestions button{background:transparent!important;color:var(--ink)!important;border-color:var(--line)!important}
+input,select{border-color:var(--line)!important}
+input:focus,select:focus{border-color:var(--accent)!important;box-shadow:0 0 0 2px rgba(118,111,159,.10)}
+
+header{padding:0 max(14px,calc((100vw - 1120px)/2));gap:20px;flex-wrap:nowrap}
+.brand{min-width:0;max-width:58%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.back{margin-left:auto;margin-right:18px;white-space:nowrap}
+.language-switch{flex:0 0 auto;white-space:nowrap}
+iframe{background:var(--paper)}
+@media(max-width:700px){header{padding:0 14px}.brand{max-width:50%;font-size:13px}.back{margin-right:8px}}
 </style>
 </head>
 <body>

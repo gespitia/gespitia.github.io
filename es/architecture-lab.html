@@ -22,7 +22,34 @@ header{height:64px;display:flex;align-items:center;justify-content:space-between
 section{padding:0 0 70px}.below{display:grid;grid-template-columns:1fr 1fr;gap:14px}.below-card{border:1px solid var(--line);background:var(--paper);padding:22px}.below-card h2{margin:3px 0 10px;font-size:1.4rem}.below-card p{color:var(--muted);font-size:.78rem}
 footer{padding:0 0 50px;color:var(--muted);font-size:.7rem}
 @media(max-width:800px){header{padding:0 12px}.header-actions{gap:8px}.back{font-size:11px}.app{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--line)}.metrics{grid-template-columns:1fr 1fr}.ai-box,.permissions,.below{grid-template-columns:1fr}.arch-mini{grid-template-columns:1fr 1fr}.main{padding:18px}.navitem{display:inline-block;width:auto}.side-note{display:none}}
-.language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-left:16px}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}@media(max-width:700px){.language-switch{margin-left:8px}}.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:18px;margin-left:auto;flex:0 0 auto;white-space:nowrap}.language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}@media(max-width:700px){.header-actions{gap:8px}.back{font-size:11px}.language-switch{font-size:.56rem}}</style></head>
+.language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-left:16px}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}@media(max-width:700px){.language-switch{margin-left:8px}}.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:18px;margin-left:auto;flex:0 0 auto;white-space:nowrap}.language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}@media(max-width:700px){.header-actions{gap:8px}.back{font-size:11px}.language-switch{font-size:.56rem}}
+/* GE portfolio visual language */
+:root{
+  --bg:#e7e9e5;
+  --paper:#f0f1ee;
+  --ink:#27302d;
+  --muted:#68726d;
+  --line:#d5dad5;
+  --accent:#766f9f;
+  --accent-soft:#918ab5;
+}
+body{background:var(--bg);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+header,.top{background:rgba(231,233,229,.94)!important;border-bottom:1px solid rgba(213,218,213,.8)!important}
+.brand{color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;letter-spacing:-.04em}
+.brand span{color:var(--accent)!important}
+.back{color:var(--muted)!important}
+.language-switch a.active{color:var(--ink)!important}
+.language-switch span{color:var(--line)!important}
+button{background:var(--ink)!important;border-color:var(--ink)!important}
+button.secondary,.suggestions button{background:transparent!important;color:var(--ink)!important;border-color:var(--line)!important}
+input,select{border-color:var(--line)!important}
+input:focus,select:focus{border-color:var(--accent)!important;box-shadow:0 0 0 2px rgba(118,111,159,.10)}
+
+header,.top{min-height:72px;padding-left:max(18px,calc((100vw - 1120px)/2));padding-right:max(18px,calc((100vw - 1120px)/2));display:flex;align-items:center;gap:20px}
+.header-actions{margin-left:auto;display:flex;align-items:center;justify-content:flex-end;gap:18px;white-space:nowrap}
+.language-switch{flex:0 0 auto}
+@media(max-width:700px){header,.top{min-height:64px;padding-left:15px;padding-right:15px}.header-actions{gap:8px}}
+</head>
 <body>
 <header><a class="brand" href="../">GE<span style="color:var(--accent)">·</span> Espacio Multi-Negocio</a><div class="header-actions"><a class="back" href="../">← Volver al portafolio</a><div class="language-switch" aria-label="Idioma"><a data-lang="en" href="../architecture-lab.html">EN</a><span>/</span><a data-lang="es" href="./architecture-lab.html">ES</a></div></div></header>
 <main class="wrap">

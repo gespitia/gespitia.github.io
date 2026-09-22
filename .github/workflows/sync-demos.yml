@@ -92,6 +92,10 @@ jobs:
           cp -R ask-a-document/dist/. demos/ask-a-document/
           cp -R talent-binder/dist/talent-binder/browser/. demos/talent-binder/
           cp -R multi-business-workspace/dist/. demos/multi-business-workspace/
+          # Cache-bust the portfolio entry point whenever the demos are rebuilt.
+          for page in index.html es/index.html; do
+            [ -f "$page" ] && sed -i "s#\(/demos/multi-business-workspace/\)[^\"']*#\1?v=\${GITHUB_SHA}#g" "$page"
+          done
           for demo in poi-editor ask-a-document talent-binder multi-business-workspace; do
             if [ -f "demos/$demo/index.html" ]; then
               mv "demos/$demo/index.html" "demos/$demo/app.html"

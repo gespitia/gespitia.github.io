@@ -46,3 +46,6 @@ The portfolio build pipeline compiles every independent demo before replacing th
 The host exposes a small token vocabulary (bg, paper, ink, muted, line, accent). Each demo maps those values into its own CSS variable layer. This keeps the host contract stable while allowing each project to preserve its native component/runtime implementation.
 
 When native is selected, the adapter removes the inherited variables so the demo falls back to its own defaults.
+
+
+TalentBinder uses an Angular Material adapter for the same inherited token vocabulary, without sharing the Angular Material runtime with the host.

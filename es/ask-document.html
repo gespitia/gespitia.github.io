@@ -23,17 +23,17 @@ a{color:inherit}.shell{max-width:1180px;margin:auto;padding:0 28px}.top{display:
 <section class="hero">
 <div class="eyebrow">Laboratorio de Ingeniería · 02</div>
 <h1>Pregúntale a un <em>documento.</em></h1>
-<p>A small retrieval demo: ask a question, retrieve the relevant passages, and return an answer with traceable sources. The point is not the chatbot — it is the system around it.</p>
+<p>Una pequeña demo de retrieval: haz una pregunta, recupera los fragmentos relevantes y recibe una respuesta con fuentes trazables. El punto no es el chatbot, sino el sistema que lo rodea.</p>
 </section>
 <section class="app">
 <aside class="panel side">
 <h2>Documento</h2>
-<div class="doc"><strong>Product Architecture Brief</strong><small>8 sections · demo knowledge base</small></div>
+<div class="doc"><strong>Product Architecture Brief</strong><small>8 secciones · base de conocimiento de demo</small></div>
 <div class="status"><span class="dot"></span>Demo lista</div>
 <div class="arch">
 <div><b>01</b> Documento</div><div><b>02</b> Dividir e indexar</div><div><b>03</b> Recuperar contexto</div><div><b>04</b> Generar respuesta</div><div><b>05</b> Citar fuentes</div>
 </div>
-<p class="note">This portfolio demo runs entirely in the browser. It uses deterministic local retrieval so the experience remains public, fast and reproducible.</p>
+<p class="note">Esta demo del portafolio funciona completamente en el navegador. Usa retrieval local determinista para que la experiencia sea pública, rápida y reproducible.</p>
 </aside>
 <main class="panel main">
 <div class="question"><input id="q" placeholder="Pregunta sobre el documento…" autocomplete="off"><button id="ask">Preguntar</button></div>
@@ -46,23 +46,23 @@ a{color:inherit}.shell{max-width:1180px;margin:auto;padding:0 28px}.top{display:
 <details class="trace"><summary>Mostrar trazabilidad de recuperación</summary><div class="steps"><span class="step">normalización de consulta</span><span class="step">puntuación de palabras clave</span><span class="step">recuperación top-k</span><span class="step">respuesta fundamentada</span><span class="step">mapeo de fuentes</span></div></details>
 </main>
 </section>
-<footer class="footer">Built by Gustavo Espitia · Angular / Architecture / AI exploration</footer>
+<footer class="footer">Construido por Gustavo Espitia · Angular / Arquitectura / exploración de IA</footer>
 </div>
 <script>
 const chunks=[
-{title:"Architecture principles",page:2,text:"The platform uses an application shell to coordinate independently deployable microfrontends. Shared contracts are kept small and explicit so teams can evolve features without coupling the entire application."},
-{title:"Arquitectura frontend",page:3,text:"Frontend applications are organized around domain microfrontends. Angular is used for application development, while shared UI primitives are exposed through Web Components and a central design system."},
-{title:"Permisos",page:4,text:"Authorization is enforced by the backend. The interface should hide unavailable actions rather than presenting controls that the current user cannot execute. Every protected operation is checked again at the API boundary."},
-{title:"Tenant isolation",page:5,text:"All business data carries a tenant identifier. PostgreSQL row-level security is used as a second isolation boundary so application mistakes cannot accidentally expose records belonging to another tenant."},
-{title:"Backend services",page:6,text:"The backend exposes stable APIs for identity, permissions and business operations. Services should remain stateless where possible and persist durable state in PostgreSQL."},
-{title:"AI retrieval",page:7,text:"Documento question answering follows a retrieval-augmented pattern: documents are split into useful passages, indexed, retrieved for each question and supplied as context before an answer is generated. Answers should cite the passages used."},
-{title:"Observability",page:8,text:"Important flows emit structured logs and metrics. AI interactions should record retrieval latency, selected sources and response status without storing unnecessary sensitive document content."}
+{title:"Principios de arquitectura",page:2,text:"La plataforma usa un App Shell para coordinar microfrontends desplegables de forma independiente. Los contratos compartidos se mantienen pequeños y explícitos para que los equipos evolucionen funcionalidades sin acoplar toda la aplicación."},
+{title:"Arquitectura frontend",page:3,text:"Las aplicaciones frontend se organizan alrededor de microfrontends por dominio. Angular se usa para desarrollar la aplicación, mientras los componentes UI compartidos se exponen mediante Web Components y un design system central."},
+{title:"Permisos",page:4,text:"La autorización se aplica en el backend. La interfaz debe ocultar las acciones no disponibles en lugar de mostrar controles que el usuario actual no puede ejecutar. Cada operación protegida se verifica nuevamente en el límite de la API."},
+{title:"Tenant isolation",page:5,text:"Todos los datos de negocio llevan un identificador de tenant. Row-Level Security de PostgreSQL se usa como segunda barrera de aislamiento para evitar que errores de la aplicación expongan accidentalmente registros de otro tenant."},
+{title:"Backend services",page:6,text:"El backend expone APIs estables para identidad, permisos y operaciones de negocio. Los servicios deben mantenerse sin estado cuando sea posible y persistir el estado durable en PostgreSQL."},
+{title:"AI retrieval",page:7,text:"Las preguntas sobre documentos siguen un patrón de retrieval aumentado: los documentos se dividen en fragmentos útiles, se indexan, se recuperan para cada pregunta y se suministran como contexto antes de generar una respuesta. Las respuestas deben citar los fragmentos utilizados."},
+{title:"Observability",page:8,text:"Los flujos importantes emiten logs y métricas estructurados. Las interacciones con IA deben registrar latencia de retrieval, fuentes seleccionadas y estado de respuesta sin almacenar contenido sensible innecesario."}
 ];
 const q=documento.getElementById("q"), ask=documento.getElementById("ask"), answer=documento.getElementById("answer");
 function normalize(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g," ").split(/\s+/).filter(Boolean)}
 function retrieve(question){const terms=normalize(question);return chunks.map(c=>{const text=normalize(c.title+" "+c.text);let score=terms.reduce((n,t)=>n+(text.includes(t)?1:0),0);return {...c,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,2)}
 function answerQuestion(question){const hits=retrieve(question);if(!question.trim()){return}
-if(!hits.length){answer.innerHTML='<h2>RESPUESTA</h2><div class="answer-text">I could not find enough evidence in this document to answer that question. A grounded system should say that instead of inventing an answer.</div>';return}
+if(!hits.length){answer.innerHTML='<h2>RESPUESTA</h2><div class="answer-text">No encontré suficiente evidencia en este documento para responder esa pregunta. Un sistema fundamentado debería decirlo en lugar de inventar una respuesta.</div>';return}
 const lead=hits[0].text;
 answer.innerHTML='<h2>RESPUESTA</h2><div class="answer-text">'+lead.replace(/(microfrontends|Web Components|PostgreSQL row-level security|retrieval-augmented pattern|backend)/gi,"<strong>$1</strong>")+'</div><div class="sources">'+hits.map(h=>'<div class="source"><b>Página '+h.page+' · '+h.title+'</b><span>Fragmento recuperado</span></div>').join("")+'</div>'}
 ask.onclick=()=>answerQuestion(q.value);q.addEventListener("keydown",e=>{if(e.key==="Enter")answerQuestion(q.value)});document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{q.value=b.dataset.q;answerQuestion(q.value)});

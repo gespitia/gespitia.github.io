@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Editaror de POI con Angular MapLibre · Gustavo Espitia</title>
+<meta name="description" content="Live Editaror de POI con Angular MapLibre demo by Gustavo Espitia.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23202824'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial' font-size='24' font-weight='700' fill='white'%3EGE%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#eef0ec;--paper:#fff;--ink:#202824;--muted:#68716c;--line:#d9ded9;--accent:#7169a0}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif}
+header{height:64px;border-bottom:1px solid var(--line);background:rgba(238,240,236,.96);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:relative;z-index:10}
+.brand{font-weight:700}.brand span{color:var(--accent)}.back{color:var(--muted);text-decoration:none;font:500 .65rem "DM Mono",monospace;text-transform:uppercase;letter-spacing:.08em;margin-left:auto;margin-right:18px}
+.language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}
+iframe{display:block;width:100%;height:calc(100vh - 64px);border:0;background:#fff}
+@media(max-width:700px){header{padding:0 14px}.brand{font-size:13px}.back{margin-right:8px}.back{font-size:.55rem}}
+</style>
+</head>
+<body>
+<header>
+<a class="brand" href="../poi-editor.html">GE<span>·</span> Editaror de POI con Angular MapLibre</a>
+<a class="back" href="../poi-editor.html">← Volver al portafolio</a>
+<div class="language-switch" aria-label="Language">
+<a data-lang="es" href="../poi-editor.html">EN</a><span>/</span><a data-lang="es" href="../poi-editor.html">ES</a>
+</div>
+</header>
+<iframe src="../demos/poi-editor/" title="Editaror de POI con Angular MapLibre"></iframe>
+<script>
+(function(){
+ const key="gespitia-language", current=localStorage.getItem(key)||"en";
+ documento.documentElement.lang=current;
+ documento.querySelectorAll("[data-lang]").forEach(a=>{
+  a.classList.toggle("active",a.dataset.lang===current);
+  a.setAttribute("aria-current",a.dataset.lang===current?"true":"false");
+  a.addEventListener("click",()=>localStorage.setItem(key,a.dataset.lang));
+ });
+})();
+</script>
+</body>
+</html>

@@ -16,19 +16,13 @@ iframe{display:block;width:100%;height:calc(100vh - 64px);border:0;background:#f
 </style>
 </head>
 <body>
-<header>
-<a class="brand" href="../poi-editor.html">GE<span>·</span> Editaror de POI con Angular MapLibre</a>
-<a class="back" href="../poi-editor.html">← Volver al portafolio</a>
-<div class="language-switch" aria-label="Language">
-<a data-lang="es" href="../poi-editor.html">EN</a><span>/</span><a data-lang="es" href="../poi-editor.html">ES</a>
-</div>
-</header>
+<header><a class="brand" href="../">GE<span>·</span> Editor de POI con Angular MapLibre</a><a class="back" href="../">← Volver al portafolio</a><div class="language-switch" aria-label="Idioma"><a data-lang="en" href="../poi-editor.html">EN</a><span>/</span><a data-lang="es" href="./poi-editor.html">ES</a></div></header>
 <iframe src="../demos/poi-editor/" title="Editaror de POI con Angular MapLibre"></iframe>
 <script>
 (function(){
- const key="gespitia-language", current=localStorage.getItem(key)||"en";
- documento.documentElement.lang=current;
- documento.querySelectorAll("[data-lang]").forEach(a=>{
+ const key="gespitia-language", current="es";
+ document.documentElement.lang=current;
+ document.querySelectorAll("[data-lang]").forEach(a=>{
   a.classList.toggle("active",a.dataset.lang===current);
   a.setAttribute("aria-current",a.dataset.lang===current?"true":"false");
   a.addEventListener("click",()=>localStorage.setItem(key,a.dataset.lang));

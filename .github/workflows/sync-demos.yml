@@ -3,6 +3,7 @@ name: Build and sync live demos
 # Build gate: every demo must compile before any published demo is replaced.
 # Refresh Ask a Document from its current source build.
 # Always build from the current default branch of each independent demo repository.
+# Trigger refresh after source-repository changes.
 
 on:
   push:

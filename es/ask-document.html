@@ -38,9 +38,9 @@ a{color:inherit}.shell{max-width:1180px;margin:auto;padding:0 28px}.top{display:
 <main class="panel main">
 <div class="question"><input id="q" placeholder="Pregunta sobre el documento…" autocomplete="off"><button id="ask">Preguntar</button></div>
 <div class="suggestions">
-<button data-q="What is the frontend architecture approach?">Arquitectura frontend</button>
-<button data-q="How should permissions work?">Permisos</button>
-<button data-q="What is the data isolation strategy?">Aislamiento de datos</button>
+<button data-q="¿Cuál es el enfoque de arquitectura frontend?">Arquitectura frontend</button>
+<button data-q="¿Cómo deben funcionar los permisos?">Permisos</button>
+<button data-q="¿Cuál es la estrategia de aislamiento de datos?">Aislamiento de datos</button>
 </div>
 <div class="answer" id="answer"><h2>RESPUESTA</h2><div class="empty">Elige una pregunta o escribe la tuya.</div></div>
 <details class="trace"><summary>Mostrar trazabilidad de recuperación</summary><div class="steps"><span class="step">normalización de consulta</span><span class="step">puntuación de palabras clave</span><span class="step">recuperación top-k</span><span class="step">respuesta fundamentada</span><span class="step">mapeo de fuentes</span></div></details>
@@ -53,12 +53,12 @@ const chunks=[
 {title:"Principios de arquitectura",page:2,text:"La plataforma usa un App Shell para coordinar microfrontends desplegables de forma independiente. Los contratos compartidos se mantienen pequeños y explícitos para que los equipos evolucionen funcionalidades sin acoplar toda la aplicación."},
 {title:"Arquitectura frontend",page:3,text:"Las aplicaciones frontend se organizan alrededor de microfrontends por dominio. Angular se usa para desarrollar la aplicación, mientras los componentes UI compartidos se exponen mediante Web Components y un design system central."},
 {title:"Permisos",page:4,text:"La autorización se aplica en el backend. La interfaz debe ocultar las acciones no disponibles en lugar de mostrar controles que el usuario actual no puede ejecutar. Cada operación protegida se verifica nuevamente en el límite de la API."},
-{title:"Tenant isolation",page:5,text:"Todos los datos de negocio llevan un identificador de tenant. Row-Level Security de PostgreSQL se usa como segunda barrera de aislamiento para evitar que errores de la aplicación expongan accidentalmente registros de otro tenant."},
-{title:"Backend services",page:6,text:"El backend expone APIs estables para identidad, permisos y operaciones de negocio. Los servicios deben mantenerse sin estado cuando sea posible y persistir el estado durable en PostgreSQL."},
-{title:"AI retrieval",page:7,text:"Las preguntas sobre documentos siguen un patrón de retrieval aumentado: los documentos se dividen en fragmentos útiles, se indexan, se recuperan para cada pregunta y se suministran como contexto antes de generar una respuesta. Las respuestas deben citar los fragmentos utilizados."},
-{title:"Observability",page:8,text:"Los flujos importantes emiten logs y métricas estructurados. Las interacciones con IA deben registrar latencia de retrieval, fuentes seleccionadas y estado de respuesta sin almacenar contenido sensible innecesario."}
+{title:"Aislamiento de tenants",page:5,text:"Todos los datos de negocio llevan un identificador de tenant. Row-Level Security de PostgreSQL se usa como segunda barrera de aislamiento para evitar que errores de la aplicación expongan accidentalmente registros de otro tenant."},
+{title:"Servicios backend",page:6,text:"El backend expone APIs estables para identidad, permisos y operaciones de negocio. Los servicios deben mantenerse sin estado cuando sea posible y persistir el estado durable en PostgreSQL."},
+{title:"Retrieval con IA",page:7,text:"Las preguntas sobre documentos siguen un patrón de retrieval aumentado: los documentos se dividen en fragmentos útiles, se indexan, se recuperan para cada pregunta y se suministran como contexto antes de generar una respuesta. Las respuestas deben citar los fragmentos utilizados."},
+{title:"Observabilidad",page:8,text:"Los flujos importantes emiten logs y métricas estructurados. Las interacciones con IA deben registrar latencia de retrieval, fuentes seleccionadas y estado de respuesta sin almacenar contenido sensible innecesario."}
 ];
-const q=documento.getElementById("q"), ask=documento.getElementById("ask"), answer=documento.getElementById("answer");
+const q=document.getElementById("q"), ask=documento.getElementById("ask"), answer=documento.getElementById("answer");
 function normalize(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g," ").split(/\s+/).filter(Boolean)}
 function retrieve(question){const terms=normalize(question);return chunks.map(c=>{const text=normalize(c.title+" "+c.text);let score=terms.reduce((n,t)=>n+(text.includes(t)?1:0),0);return {...c,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,2)}
 function answerQuestion(question){const hits=retrieve(question);if(!question.trim()){return}

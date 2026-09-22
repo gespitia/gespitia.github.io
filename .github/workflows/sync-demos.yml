@@ -23,12 +23,26 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Checkout Angular MapLibre POI Editor
+        uses: actions/checkout@v4
+        with:
+          repository: gespitia/angular-maplibre-poi-editor
+          ref: master
+          path: angular-maplibre-poi-editor
+
       - name: Checkout Ask a Document
         uses: actions/checkout@v4
         with:
           repository: gespitia/ask-a-document
           ref: main
           path: ask-a-document
+
+      - name: Checkout TalentBinder
+        uses: actions/checkout@v4
+        with:
+          repository: gespitia/talent-binder
+          ref: master
+          path: talent-binder
 
       - name: Checkout Multi-Business Workspace
         uses: actions/checkout@v4
@@ -42,11 +56,23 @@ jobs:
         with:
           node-version: 22
 
+      - name: Build Angular MapLibre POI Editor
+        working-directory: angular-maplibre-poi-editor
+        run: |
+          npm install --no-audit --no-fund
+          npm run build -- --base-href /demos/poi-editor/
+
       - name: Build Ask a Document
         working-directory: ask-a-document
         run: |
           npm install --no-audit --no-fund
           npm run build
+
+      - name: Build TalentBinder
+        working-directory: talent-binder
+        run: |
+          npm install --no-audit --no-fund --ignore-scripts
+          npm run build -- --base-href /demos/talent-binder/
 
       - name: Build Multi-Business Workspace
         working-directory: multi-business-workspace
@@ -56,16 +82,22 @@ jobs:
 
       - name: Sync built demos
         run: |
-          rm -rf demos/ask-a-document demos/multi-business-workspace
-          mkdir -p demos/ask-a-document demos/multi-business-workspace
+          rm -rf demos/poi-editor demos/ask-a-document demos/talent-binder demos/multi-business-workspace
+          mkdir -p demos/poi-editor demos/ask-a-document demos/talent-binder demos/multi-business-workspace
+          cp -R angular-maplibre-poi-editor/dist/angular-maplibre-poi-editor/browser/. demos/poi-editor/
           cp -R ask-a-document/dist/. demos/ask-a-document/
+          cp -R talent-binder/dist/talent-binder/browser/. demos/talent-binder/
           cp -R multi-business-workspace/dist/. demos/multi-business-workspace/
+          test -f demos/poi-editor/index.html
+          test -f demos/ask-a-document/index.html
+          test -f demos/talent-binder/index.html
+          test -f demos/multi-business-workspace/index.html
 
       - name: Commit demo builds
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add demos/ask-a-document demos/multi-business-workspace
+          git add demos/poi-editor demos/ask-a-document demos/talent-binder demos/multi-business-workspace
           if git diff --cached --quiet; then
             echo "No demo changes to commit."
           else

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TalentBinder · Laboratorio de Ingeniería · Gustavo Espitia</title>
+<style>
+:root{--bg:#f6f7f9;--panel:#fff;--text:#18202a;--muted:#68717d;--line:#e4e7eb;--accent:#5b4bb7;--danger:#b42318;--shadow:0 8px 30px rgba(20,25,35,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+header{height:64px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.brand{font-weight:750;font-size:18px}.brand span{color:var(--accent)}.back{color:var(--muted);text-decoration:none}
+main{max-width:1180px;margin:32px auto;padding:0 20px}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+h1{font-size:32px;margin:6px 0}.intro{color:var(--muted);margin:0 0 26px;max-width:700px}
+.toolbar{display:flex;gap:12px;align-items:center;margin-bottom:16px}.search{flex:1;position:relative}.search input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:9px;font:inherit;background:#fff}
+button{border:0;border-radius:9px;padding:11px 16px;font:600 14px inherit;cursor:pointer;background:var(--accent);color:#fff}button.secondary{background:#fff;color:var(--text);border:1px solid var(--line)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}.meta{padding:14px 18px;color:var(--muted);border-bottom:1px solid var(--line)}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line)}th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:#fafbfc}tr:last-child td{border-bottom:0}.name{font-weight:650}.pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#f0eefb;color:#4b3da0;font-size:12px}
+.actions button{padding:7px 10px;font-size:12px}.empty{padding:40px;text-align:center;color:var(--muted)}
+dialog{border:0;border-radius:14px;width:min(560px,calc(100% - 30px));padding:0;box-shadow:0 20px 70px rgba(0,0,0,.22)}dialog::backdrop{background:rgba(20,25,35,.35)}.modal{padding:24px}.modal h2{margin:0 0 18px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input,.field select{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font:inherit}.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+@media(max-width:720px){.toolbar{flex-direction:column;align-items:stretch}.grid{grid-template-columns:1fr}table{min-width:760px}.card{overflow:auto}h1{font-size:27px}}
+.language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-left:16px}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}@media(max-width:700px){.language-switch{margin-left:8px}}.header-actions{display:flex;align-items:center;gap:18px}.language-switch{display:flex;align-items:center;gap:6px;font:500 .62rem "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase}.language-switch a{color:var(--muted);text-decoration:none;padding:4px 2px}.language-switch a.active{color:var(--ink);font-weight:700}.language-switch span{color:var(--line)}@media(max-width:700px){.header-actions{gap:8px}.back{font-size:11px}.language-switch{font-size:.56rem}}</style>
+</head>
+<body>
+<header><a class="brand" href="../talent-binder.html">GE<span style="color:var(--accent)">·</span> TalentBinder</a><div class="header-actions"><a class="back" href="../talent-binder.html">← Volver al portafolio</a><div class="language-switch" aria-label="Language"><a data-lang="es" href="../talent-binder.html">EN</a><span>/</span><a data-lang="es" href="../talent-binder.html">ES</a></div></div></header>
+<main>
+<div class="eyebrow">Laboratorio de Ingeniería · 03</div><h1>Gestión de empleados</h1>
+<p class="intro">Una adaptación pública que funciona en el navegador de mi proyecto TalentBinder con Angular 18. Explora búsqueda, creación, edición y eliminación de empleados sin depender de un backend.</p>
+<div class="toolbar"><div class="search"><input id="search" placeholder="Buscar por nombre, cargo o departamento…"></div><button id="add">+ Agregar empleado</button></div>
+<div class="card"><div class="meta"><span id="count"></span> · Datos de demostración</div><table><thead><tr><th>Empleado</th><th>Cargo</th><th>Departamento</th><th>Email</th><th>Acciones</th></tr></thead><tbody id="rows"></tbody></table></div>
+</main>
+<dialog id="dlg"><form method="dialog" class="modal" id="form"><h2 id="title">Add employee</h2><div class="grid">
+<div class="field"><label>Nombre</label><input name="firstName" required></div><div class="field"><label>Apellido</label><input name="lastName" required></div>
+<div class="field"><label>Cargo</label><select name="position"><option>front-end developer</option><option>full-stack developer</option><option>product manager</option><option>scrum master</option><option>help desk</option></select></div>
+<div class="field"><label>Departamento</label><select name="department"><option>Desarrollo</option><option>IT</option><option>Soporte</option><option>Administración</option></select></div>
+<div class="field"><label>Email</label><input name="email" type="email" required></div><div class="field"><label>Teléfono</label><input name="phoneNumber"></div>
+</div><div class="modal-actions"><button type="button" class="secondary" id="cancel">Cancelar</button><button type="submit">Guardar empleado</button></div></form></dialog>
+<script>
+const seed=[
+["Ana","Martínez","front-end developer","Desarrollo","ana.martinez@empresa.com","3005550101"],
+["Carlos","Gómez","full-stack developer","IT","carlos.gomez@empresa.com","3005550102"],
+["Laura","Rodríguez","product manager","Administración","laura.rodriguez@empresa.com","3005550103"],
+["Miguel","Torres","scrum master","Desarrollo","miguel.torres@empresa.com","3005550104"],
+["Sofía","Herrera","front-end developer","Desarrollo","sofia.herrera@empresa.com","3005550105"],
+["Daniel","Castro","help desk","Soporte","daniel.castro@empresa.com","3005550106"],
+["Valentina","Rojas","full-stack developer","IT","valentina.rojas@empresa.com","3005550107"],
+["Andrés","Mendoza","front-end developer","Desarrollo","andres.mendoza@empresa.com","3005550108"],
+["Camila","Pérez","product manager","Administración","camila.perez@empresa.com","3005550109"],
+["Jorge","Vargas","help desk","Soporte","jorge.vargas@empresa.com","3005550110"]
+].map((x,i)=>({id:i+1,firstName:x[0],lastName:x[1],position:x[2],department:x[3],email:x[4],phoneNumber:x[5]}));
+let empleados=[...seed],editing=null;
+const rows=documento.querySelector("#rows"),count=documento.querySelector("#count"),search=documento.querySelector("#search"),dlg=documento.querySelector("#dlg"),form=documento.querySelector("#form"),title=documento.querySelector("#title");
+function render(){const q=search.value.toLowerCase().trim();const list=empleados.filter(e=>[e.firstName,e.lastName,e.position,e.department,e.email].join(" ").toLowerCase().includes(q));count.textContent=list.length+" empleados";rows.innerHTML=list.length?list.map(e=>`<tr><td class="name">${e.firstName} ${e.lastName}</td><td><span class="pill">${e.position}</span></td><td>${e.department}</td><td>${e.email}</td><td class="actions"><button class="secondary" onclick="editEmpleado(${e.id})">Editar</button> <button class="secondary" onclick="removeEmpleado(${e.id})">Eliminar</button></td></tr>`).join(""):'<tr><td colspan="5" class="empty">No empleados match your search.</td></tr>'}
+window.editEmpleado=id=>{editing=empleados.find(e=>e.id===id);openForm()};
+window.removeEmpleado=id=>{if(confirm("Eliminar this employee from the demo?")){empleados=empleados.filter(e=>e.id!==id);render()}};
+function openForm(){title.textContent=editing?"Editarar empleado":"Add employee";form.reset();if(editing)Object.keys(editing).forEach(k=>{if(form.elements[k])form.elements[k].value=editing[k]});dlg.showModal()}
+documento.querySelector("#add").onclick=()=>{editing=null;openForm()};documento.querySelector("#cancel").onclick=()=>dlg.close();search.oninput=render;
+form.onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(form));if(editing)Object.assign(editing,d);else empleados.unshift({id:Date.now(),...d});dlg.close();render()};render();
+</script><script>
+(function(){
+ const key="gespitia-language";
+ const current=localStorage.getItem(key)||"en";
+ documento.documentElement.lang=current;
+ documento.querySelectorAll("[data-lang]").forEach(a=>{
+  a.classList.toggle("active",a.dataset.lang===current);
+  a.setAttribute("aria-current",a.dataset.lang===current?"true":"false");
+  a.addEventListener("click",()=>localStorage.setItem(key,a.dataset.lang));
+ });
+})();
+</script></body></html>

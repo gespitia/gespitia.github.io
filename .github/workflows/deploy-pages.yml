@@ -32,12 +32,29 @@ jobs:
           ref: master
           path: poi-editor
 
+      - name: Checkout Ask a Document
+        uses: actions/checkout@v4
+        with:
+          repository: gespitia/ask-a-document
+          ref: main
+          path: ask-a-document
+
+      - name: Checkout Multi-Business Workspace
+        uses: actions/checkout@v4
+        with:
+          repository: gespitia/multi-business-workspace
+          ref: main
+          path: multi-business-workspace
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: poi-editor/package-lock.json
+          cache-dependency-path: |
+            poi-editor/package-lock.json
+            ask-a-document/package-lock.json
+            multi-business-workspace/package-lock.json
 
       - name: Build POI editor
         working-directory: poi-editor
@@ -50,6 +67,30 @@ jobs:
           rm -rf demos/poi-editor
           mkdir -p demos/poi-editor
           cp -R poi-editor/dist/angular-maplibre-poi-editor/browser/. demos/poi-editor/
+
+      - name: Build Ask a Document
+        working-directory: ask-a-document
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: Copy Ask a Document into portfolio
+        run: |
+          rm -rf demos/ask-a-document
+          mkdir -p demos/ask-a-document
+          cp -R ask-a-document/dist/. demos/ask-a-document/
+
+      - name: Build Multi-Business Workspace
+        working-directory: multi-business-workspace
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: Copy Multi-Business Workspace into portfolio
+        run: |
+          rm -rf demos/multi-business-workspace
+          mkdir -p demos/multi-business-workspace
+          cp -R multi-business-workspace/dist/. demos/multi-business-workspace/
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

@@ -27,7 +27,7 @@ dialog{border:0;border-radius:14px;width:min(560px,calc(100% - 30px));padding:0;
 <div class="toolbar"><div class="search"><input id="search" placeholder="Buscar por nombre, cargo o departamento…"></div><button id="add">+ Agregar empleado</button></div>
 <div class="card"><div class="meta"><span id="count"></span> · Datos de demostración</div><table><thead><tr><th>Empleado</th><th>Cargo</th><th>Departamento</th><th>Email</th><th>Acciones</th></tr></thead><tbody id="rows"></tbody></table></div>
 </main>
-<dialog id="dlg"><form method="dialog" class="modal" id="form"><h2 id="title">Add employee</h2><div class="grid">
+<dialog id="dlg"><form method="dialog" class="modal" id="form"><h2 id="title">Agregar empleado</h2><div class="grid">
 <div class="field"><label>Nombre</label><input name="firstName" required></div><div class="field"><label>Apellido</label><input name="lastName" required></div>
 <div class="field"><label>Cargo</label><select name="position"><option>front-end developer</option><option>full-stack developer</option><option>product manager</option><option>scrum master</option><option>help desk</option></select></div>
 <div class="field"><label>Departamento</label><select name="department"><option>Desarrollo</option><option>IT</option><option>Soporte</option><option>Administración</option></select></div>
@@ -48,10 +48,10 @@ const seed=[
 ].map((x,i)=>({id:i+1,firstName:x[0],lastName:x[1],position:x[2],department:x[3],email:x[4],phoneNumber:x[5]}));
 let empleados=[...seed],editing=null;
 const rows=document.querySelector("#rows"),count=document.querySelector("#count"),search=document.querySelector("#search"),dlg=document.querySelector("#dlg"),form=document.querySelector("#form"),title=document.querySelector("#title");
-function render(){const q=search.value.toLowerCase().trim();const list=empleados.filter(e=>[e.firstName,e.lastName,e.position,e.department,e.email].join(" ").toLowerCase().includes(q));count.textContent=list.length+" empleados";rows.innerHTML=list.length?list.map(e=>`<tr><td class="name">${e.firstName} ${e.lastName}</td><td><span class="pill">${e.position}</span></td><td>${e.department}</td><td>${e.email}</td><td class="actions"><button class="secondary" onclick="editEmpleado(${e.id})">Editar</button> <button class="secondary" onclick="removeEmpleado(${e.id})">Eliminar</button></td></tr>`).join(""):'<tr><td colspan="5" class="empty">No empleados match your search.</td></tr>'}
+function render(){const q=search.value.toLowerCase().trim();const list=empleados.filter(e=>[e.firstName,e.lastName,e.position,e.department,e.email].join(" ").toLowerCase().includes(q));count.textContent=list.length+" empleados";rows.innerHTML=list.length?list.map(e=>`<tr><td class="name">${e.firstName} ${e.lastName}</td><td><span class="pill">${e.position}</span></td><td>${e.department}</td><td>${e.email}</td><td class="actions"><button class="secondary" onclick="editEmpleado(${e.id})">Editar</button> <button class="secondary" onclick="removeEmpleado(${e.id})">Eliminar</button></td></tr>`).join(""):'<tr><td colspan="5" class="empty">Ningún empleado coincide con tu búsqueda.</td></tr>'}
 window.editEmpleado=id=>{editing=empleados.find(e=>e.id===id);openForm()};
-window.removeEmpleado=id=>{if(confirm("Eliminar this employee from the demo?")){empleados=empleados.filter(e=>e.id!==id);render()}};
-function openForm(){title.textContent=editing?"Editarar empleado":"Add employee";form.reset();if(editing)Object.keys(editing).forEach(k=>{if(form.elements[k])form.elements[k].value=editing[k]});dlg.showModal()}
+window.removeEmpleado=id=>{if(confirm("¿Eliminar este empleado de la demo?")){empleados=empleados.filter(e=>e.id!==id);render()}};
+function openForm(){title.textContent=editing?"Editar empleado":"Agregar empleado";form.reset();if(editing)Object.keys(editing).forEach(k=>{if(form.elements[k])form.elements[k].value=editing[k]});dlg.showModal()}
 document.querySelector("#add").onclick=()=>{editing=null;openForm()};document.querySelector("#cancel").onclick=()=>dlg.close();search.oninput=render;
 form.onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(form));if(editing)Object.assign(editing,d);else empleados.unshift({id:Date.now(),...d});dlg.close();render()};render();
 </script><script>

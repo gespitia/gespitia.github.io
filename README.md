@@ -50,3 +50,6 @@ The site includes:
 Repository: https://github.com/gespitia/gespitia.github.io
 
 Publish the `main` branch from the repository root in **Settings → Pages**.
+
+
+<!-- Demo sync checkpoint: multi-business interactive proof refresh 2026-09-24 -->

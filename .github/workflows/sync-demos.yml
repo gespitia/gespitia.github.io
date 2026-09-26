@@ -48,13 +48,6 @@ jobs:
           ref: master
           path: talent-binder
 
-      - name: Checkout Multi-Business Workspace
-        uses: actions/checkout@v4
-        with:
-          repository: gespitia/multi-business-workspace
-          ref: main
-          path: multi-business-workspace
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -78,20 +71,13 @@ jobs:
           npm install --no-audit --no-fund --ignore-scripts
           npm run build -- --base-href /demos/talent-binder/
 
-      - name: Build Multi-Business Workspace
-        working-directory: multi-business-workspace
-        run: |
-          npm install --no-audit --no-fund
-          npm run build
-
       - name: Sync built demos
         run: |
           rm -rf demos/poi-editor demos/ask-a-document demos/talent-binder demos/multi-business-workspace
-          mkdir -p demos/poi-editor demos/ask-a-document demos/talent-binder demos/multi-business-workspace
+          mkdir -p demos/poi-editor demos/ask-a-document demos/talent-binder
           cp -R angular-maplibre-poi-editor/dist/angular-maplibre-poi-editor/browser/. demos/poi-editor/
           cp -R ask-a-document/dist/. demos/ask-a-document/
           cp -R talent-binder/dist/talent-binder/browser/. demos/talent-binder/
-          cp -R multi-business-workspace/dist/. demos/multi-business-workspace/
           # Cache-bust the portfolio entry point whenever the demos are rebuilt.
           for page in index.html es/index.html; do
             [ -f "$page" ] && sed -i "s#\(/demos/multi-business-workspace/\)[^\"']*#\1?v=\${GITHUB_SHA}#g" "$page"
@@ -165,8 +151,7 @@ jobs:
           test -f demos/poi-editor/index.html
           test -f demos/ask-a-document/index.html
           test -f demos/talent-binder/index.html
-          test -f demos/multi-business-workspace/index.html
-
+          
       - name: Commit demo builds
         run: |
           git config user.name "github-actions[bot]"

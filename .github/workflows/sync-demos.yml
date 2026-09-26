@@ -48,7 +48,7 @@ jobs:
           ref: master
           path: talent-binder
 
-      - name: Setup Node
+      - name: Checkout Wanderly WhatsApp Agent\n        uses: actions/checkout@v4\n        with:\n          repository: gespitia/wanderly-whatsapp-agent\n          ref: main\n          path: wanderly-whatsapp-agent\n\n      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -71,13 +71,13 @@ jobs:
           npm install --no-audit --no-fund --ignore-scripts
           npm run build -- --base-href /demos/talent-binder/
 
-      - name: Sync built demos
+      - name: Prepare Wanderly AI Agent\n        run: |\n          rm -rf wanderly-whatsapp-agent/public/dist\n          test -f wanderly-whatsapp-agent/public/index.html\n\n      - name: Sync built demos
         run: |
-          rm -rf demos/poi-editor demos/ask-a-document demos/talent-binder demos/multi-business-workspace
-          mkdir -p demos/poi-editor demos/ask-a-document demos/talent-binder
+          rm -rf demos/poi-editor demos/ask-a-document demos/talent-binder demos/multi-business-workspace demos/wanderly-whatsapp-agent
+          mkdir -p demos/poi-editor demos/ask-a-document demos/talent-binder demos/wanderly-whatsapp-agent
           cp -R angular-maplibre-poi-editor/dist/angular-maplibre-poi-editor/browser/. demos/poi-editor/
           cp -R ask-a-document/dist/. demos/ask-a-document/
-          cp -R talent-binder/dist/talent-binder/browser/. demos/talent-binder/
+          cp -R talent-binder/dist/talent-binder/browser/. demos/talent-binder/\n          cp -R wanderly-whatsapp-agent/public/. demos/wanderly-whatsapp-agent/
           # Cache-bust the portfolio entry point whenever the demos are rebuilt.
           for page in index.html es/index.html; do
             [ -f "$page" ] && sed -i "s#\(/demos/multi-business-workspace/\)[^\"']*#\1?v=\${GITHUB_SHA}#g" "$page"
@@ -150,7 +150,7 @@ jobs:
           done
           test -f demos/poi-editor/index.html
           test -f demos/ask-a-document/index.html
-          test -f demos/talent-binder/index.html
+          test -f demos/talent-binder/index.html\n          test -f demos/wanderly-whatsapp-agent/index.html
           
       - name: Commit demo builds
         run: |

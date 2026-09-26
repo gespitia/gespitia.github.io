@@ -1,3 +1,4 @@
 Rebuild demos from latest source repositories.
 
 Rebuild Multi-Business Workspace interactive proof · 2026-09-24T10:40Z
+Publish Wanderly AI Agent demo · 2026-09-25T21:40Z

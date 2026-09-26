@@ -53,6 +53,13 @@ jobs:
         with:
           node-version: 22
 
+      - name: Checkout Multi-Business Workspace
+        uses: actions/checkout@v4
+        with:
+          repository: gespitia/multi-business-workspace
+          ref: main
+          path: multi-business-workspace
+
       - name: Build Angular MapLibre POI Editor
         working-directory: angular-maplibre-poi-editor
         run: |
@@ -71,10 +78,16 @@ jobs:
           npm install --no-audit --no-fund --ignore-scripts
           npm run build -- --base-href /demos/talent-binder/
 
+      - name: Build Multi-Business Workspace
+        working-directory: multi-business-workspace
+        run: |
+          npm install --no-audit --no-fund
+          npm run build:all
+
       - name: Prepare Wanderly AI Agent\n        run: |\n          rm -rf wanderly-whatsapp-agent/public/dist\n          test -f wanderly-whatsapp-agent/public/index.html\n\n      - name: Sync built demos
         run: |
           rm -rf demos/poi-editor demos/ask-a-document demos/talent-binder demos/multi-business-workspace demos/wanderly-whatsapp-agent
-          mkdir -p demos/poi-editor demos/ask-a-document demos/talent-binder demos/wanderly-whatsapp-agent
+          mkdir -p demos/poi-editor demos/ask-a-document demos/talent-binder demos/multi-business-workspace demos/multi-business-workspace/microfrontend demos/wanderly-whatsapp-agent
           cp -R angular-maplibre-poi-editor/dist/angular-maplibre-poi-editor/browser/. demos/poi-editor/
           cp -R ask-a-document/dist/. demos/ask-a-document/
           cp -R talent-binder/dist/talent-binder/browser/. demos/talent-binder/\n          cp -R wanderly-whatsapp-agent/public/. demos/wanderly-whatsapp-agent/

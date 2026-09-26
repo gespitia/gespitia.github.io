@@ -359,3 +359,11 @@ nav a:hover,.language-switch a:hover{color:var(--ink)}
   .footer{flex-direction:column;align-items:flex-start;justify-content:center;gap:5px}
   .section-intro h2,.contact h2{font-size:2.75rem}
 }
+.micro-lab{background:var(--bg)}
+.micro-controls{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 18px}
+.micro-controls label{display:flex;flex-direction:column;gap:7px;font:500 .62rem "DM Mono",monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.micro-controls select{height:42px;padding:0 10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:500 .72rem "Space Grotesk",system-ui,sans-serif}
+.micro-shell{border:1px solid var(--line);background:var(--panel);padding:20px;min-height:560px;overflow:auto}
+.micro-shell multi-business-workspace{display:block;min-height:520px}
+@media(max-width:900px){.micro-controls{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.micro-controls{grid-template-columns:1fr}.micro-shell{padding:10px}}
